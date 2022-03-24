@@ -1,0 +1,33 @@
+{
+  "name": "@cdxoo/mongodb-escape-keys",
+  "version": "0.1.0",
+  "description": "escape object keys that include '$' or '.' so they can be inserted",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "npx mocha --bail test/*.spec.js"
+  },
+  "author": "Jan Schwalbe",
+  "license": "MIT",
+  "keywords": [
+    "mongo",
+    "mongodb",
+    "escape"
+  ],
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdxOo/mongodb-escape-keys.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cdxOo/mongodb-escape-keys/issues"
+  },
+  "homepage": "https://github.com/cdxOo/mongodb-escape-keys#readme",
+  "dependencies": {
+    "@cdxoo/jsonpointer-to-objectpath": "^1.0.0",
+    "@cdxoo/objectpath-to-jsonpointer": "^1.0.0",
+    "map-obj": "^4.3.0"
+  }
+}
