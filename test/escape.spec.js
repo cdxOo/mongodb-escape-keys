@@ -1,4 +1,8 @@
+'use strict';
 var { expect } = require('chai');
+var { EJSON } = require('bson');
+var { ObjectId } = require('mongodb');
+
 var mongoKeys = require('../src');
 
 describe('basics', () => {
@@ -32,4 +36,28 @@ describe('basics', () => {
             expect(mongoKeys.unescape(it[1])).to.deep.eql(it[0]);
         }
     });
+
+    it('escape handles ObjectID well', () => {
+        var payload = {
+            'a.fooId': ObjectId('000000000000000000000000')
+        };
+        var escaped = mongoKeys.escape(payload);
+
+        var ejson = JSON.parse(EJSON.stringify(escaped))
+        expect(ejson).to.deep.eql({
+            '/a/fooId': { $oid: '000000000000000000000000' }
+        });
+    })
+    
+    it('unescape handles ObjectID well', () => {
+        var payload = {
+            '/a/fooId': ObjectId('000000000000000000000000')
+        };
+        var unescaped = mongoKeys.unescape(payload);
+
+        var ejson = JSON.parse(EJSON.stringify(unescaped))
+        expect(ejson).to.deep.eql({
+            'a.fooId': { $oid: '000000000000000000000000' }
+        });
+    })
 });
