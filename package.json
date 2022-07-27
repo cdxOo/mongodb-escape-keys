@@ -2,9 +2,14 @@
   "name": "@cdxoo/mongodb-escape-keys",
   "version": "0.1.0",
   "description": "escape object keys that include '$' or '.' so they can be inserted",
-  "main": "src/index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "npx mocha --bail test/*.spec.js"
+    "test": "make test",
+    "clean": "make clean",
+    "build": "make build"
   },
   "author": "Jan Schwalbe",
   "license": "MIT",
@@ -14,9 +19,12 @@
     "escape"
   ],
   "devDependencies": {
-    "bson": "^4.6.5",
+    "@babel/cli": "~7.18.6",
+    "@babel/core": "~7.18.6",
+    "@babel/preset-env": "^7.18.6",
     "chai": "^4.3.6",
     "mocha": "^9.2.2",
+    "bson": "^4.6.5",
     "mongodb": "^3.6.6"
   },
   "repository": {
