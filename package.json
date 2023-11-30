@@ -38,6 +38,6 @@
   "dependencies": {
     "@cdxoo/jsonpointer-to-objectpath": "^1.0.0",
     "@cdxoo/objectpath-to-jsonpointer": "^1.0.0",
-    "@cdxoo/traverse": "^0.0.1"
+    "@cdxoo/traverse": "^0.0.2"
   }
 }
