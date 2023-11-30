@@ -60,4 +60,22 @@ describe('basics', () => {
             'a.fooId': { $oid: '000000000000000000000000' }
         });
     })
+
+    it('can traverse arrays when required', () => {
+        var payload = {
+            ary: [{ foo: { bar: 42 }}],
+            a: { b: 'x' },
+        }
+
+        var options = { traverseArrays: true }
+
+        var escaped = mongoKeys.escape(payload, options);
+        expect(escaped).to.deep.eql({
+            '/ary': [{ '/foo': { '/bar': 42 }}],
+            '/a': { '/b': 'x' }
+        })
+        
+        var unescaped = mongoKeys.unescape(escaped, options);
+        expect(unescaped).to.deep.eql(payload)
+    })
 });

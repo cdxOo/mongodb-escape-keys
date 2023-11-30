@@ -3,10 +3,20 @@ var traverse = require('@cdxoo/traverse');
 var convertPathToPointer = require('@cdxoo/objectpath-to-jsonpointer');
 var convertPointerToPath = require('@cdxoo/jsonpointer-to-objectpath');
 
+var createAugmentedPathToken = ({ key, parentNode }) => ({
+    key,
+    isArrayItem: Array.isArray(parentNode.value)
+})
+
 var escapeTokens = (tokens) => {
     var out = [];
     for (var t of tokens) {
-        out.push(convertPathToPointer(t));
+        var { key, isArrayItem } = t;
+        out.push(
+            isArrayItem
+            ? key
+            : convertPathToPointer(key)
+        );
     }
     return out;
 }
@@ -14,7 +24,12 @@ var escapeTokens = (tokens) => {
 var unescapeTokens = (tokens) => {
     var out = [];
     for (var t of tokens) {
-        out.push(convertPointerToPath(t));
+        var { key, isArrayItem } = t;
+        out.push(
+            isArrayItem
+            ? key
+            : convertPointerToPath(key)
+        );
     }
     return out;
 }
@@ -46,11 +61,13 @@ var applyTo = ({ target: out, path, value, isLeaf }) => {
     }
 }
 
-var escapeKeys = (payload) => {
+var escapeKeys = (payload, options = {}) => {
+    var { traverseArrays = false } = options;
+
     var out = {};
     traverse(payload, (context) => {
         var { isLeaf, path, value } = context;
-        
+
         applyTo({
             target: out,
             path: escapeTokens(path),
@@ -58,12 +75,17 @@ var escapeKeys = (payload) => {
             isLeaf
         });
 
-    }, {});
+    }, {
+        traverseArrays,
+        createPathToken: createAugmentedPathToken
+    });
 
     return out;
 }
 
-var unescapeKeys = (payload) => {
+var unescapeKeys = (payload, options = {}) => {
+    var { traverseArrays = false } = options;
+
     var out = {};
     traverse(payload, (context) => {
         var { isLeaf, path, value } = context;
@@ -75,7 +97,10 @@ var unescapeKeys = (payload) => {
             isLeaf
         });
 
-    }, {});
+    }, {
+        traverseArrays,
+        createPathToken: createAugmentedPathToken
+    });
     return out;
 }
 
