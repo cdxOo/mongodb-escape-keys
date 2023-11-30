@@ -1,6 +1,6 @@
 {
   "name": "@cdxoo/mongodb-escape-keys",
-  "version": "0.1.1",
+  "version": "0.2.0-beta.0",
   "description": "escape object keys that include '$' or '.' so they can be inserted",
   "main": "dist/index.js",
   "files": [
@@ -10,7 +10,6 @@
     "test": "npx mocha --bail test/*.spec.js",
     "clean": "rm -rf dist; mkdir -p dist",
     "build": "npx babel --env-name cjs --out-dir ./dist ./src",
-    
     "prepublishOnly": "npm test",
     "release:dry": "npx release-it --dry-run --no-npm",
     "release:beta": "release-it --preRelease=beta",
