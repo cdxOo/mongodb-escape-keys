@@ -7,9 +7,14 @@
     "dist"
   ],
   "scripts": {
-    "test": "make test",
-    "clean": "make clean",
-    "build": "make build"
+    "test": "npx mocha --bail test/*.spec.js",
+    "clean": "rm -rf dist; mkdir -p dist",
+    "build": "npx babel --env-name cjs --out-dir ./dist ./src",
+    
+    "prepublishOnly": "npm test",
+    "release:dry": "npx release-it --dry-run --no-npm",
+    "release:beta": "release-it --preRelease=beta",
+    "release": "release-it"
   },
   "author": "Jan Schwalbe",
   "license": "MIT",
@@ -22,10 +27,11 @@
     "@babel/cli": "~7.18.6",
     "@babel/core": "~7.18.6",
     "@babel/preset-env": "^7.18.6",
-    "chai": "^4.3.6",
-    "mocha": "^9.2.2",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0",
     "bson": "^4.6.5",
-    "mongodb": "^3.6.6"
+    "mongodb": "^3.6.6",
+    "release-it": "^15.11.0"
   },
   "repository": {
     "type": "git",
